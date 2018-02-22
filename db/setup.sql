@@ -1,0 +1,19 @@
+CREATE TABLE DEPARTMENTS
+(
+    ID bigint PRIMARY KEY NOT NULL,
+    NAME varchar(100),
+    ADDRESS varchar(500)
+);
+CREATE TABLE PERSON
+(
+    ID bigint PRIMARY KEY NOT NULL,
+    POSITION_ID bigint,
+    FULLNAME varchar(100),
+    DEPARTMENT_ID bigint NOT NULL,
+    SALARY int
+);
+CREATE TABLE POSITION
+(
+    ID bigint PRIMARY KEY NOT NULL,
+    NAME varchar(100) NOT NULL
+);
