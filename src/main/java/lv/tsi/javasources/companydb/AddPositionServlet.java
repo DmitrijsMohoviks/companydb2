@@ -18,15 +18,20 @@ public class AddPositionServlet extends HttpServlet {
         //System.out.println(pos_name);
         try (
                 Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/company");
-                //Statement stmt1 = conn.createStatement();
-                //ResultSet next_id_rs = stmt1.executeQuery("select max(id) from POSITION");
-                //next_id_rs.next();
-                //long next_id = next_id_rs.getLong(1));
-                PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO POSITION (ID, NAME) VALUES (7, ?)");
-                stmt2.setString(1, pos_name);
-                //stmt2.executeQuery()
-                //ResultSet rs = stmt2.executeQuery("INSERT INTO POSITION (ID, NAME) VALUES (7, this.pos_name)");
+
         ) {
+            Statement stmt1 = conn.createStatement();
+            ResultSet next_id_rs = stmt1.executeQuery("select max(id) id from POSITION");
+            long id = 1;
+            while (next_id_rs.next()) {
+                id = next_id_rs.getLong("id");
+                //System.out.println(id);
+            }
+            long next_id = id + 1;
+            PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO POSITION (ID, NAME) VALUES (" + next_id + ", ?)");
+            //System.out.println(pos_name + "-2");
+            stmt2.setString(1, pos_name);
+            stmt2.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Something went wrong!");
         }
